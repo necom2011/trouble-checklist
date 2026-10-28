@@ -23,3 +23,10 @@ button{font-size:16px;padding:8px;min-height:40px}.primary{font-size:17px}.chip{
 .item .ts{font-size:11px;color:#888}.acts{flex-direction:column;gap:3px;margin:0}.acts button{min-height:30px;padding:3px 8px;font-size:13px}
 .item.fixed{opacity:1}.item.fixed .t{text-decoration:none}h2{font-size:15px;margin:10px 2px 4px}
 textarea,input,select,button{font-family:inherit}
+.hday{font-size:13px;font-weight:700;color:#555;margin:8px 2px 3px}.hist{border-right-color:#546e7a}.hn{font-weight:700;font-size:15px}.ha{font-size:14px;color:#333}
+.jobbar{display:flex;gap:5px;align-items:center;margin-bottom:6px;flex-wrap:wrap}.jobbar button{flex:1;padding:6px;min-height:38px;font-size:14px}#jobStat{width:100%}
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:10px;color:#fff;background:#757575}.badge.open{background:#ef6c00}.badge.done{background:#2e7d32}
+.hist.open{border-right-color:#ef6c00}.hist.done{border-right-color:#2e7d32}.hist.cur{outline:2px solid #1565c0}#hFilter{margin-bottom:4px}
+.robar{display:none;background:#e8f5e9;border:1px solid #2e7d32;border-radius:8px;padding:6px;font-size:14px;margin-bottom:6px;align-items:center;gap:6px;justify-content:space-between}.ro .robar{display:flex}.robar button{min-height:32px;padding:4px 10px;font-size:14px;background:#2e7d32;color:#fff}
+.ro #newBtn,.ro #saveJobBtn,.ro #doneBtn,.ro #clearBtn,.ro #list button.e,.ro #list button.d,.ro #list button.f,.ro #done button.e,.ro #done button.d,.ro #done button.f{display:none}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 14px;border-radius:18px;font-size:14px;opacity:0;transition:.3s;pointer-events:none}#toast.on{opacity:1}

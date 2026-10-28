@@ -1,14 +1,18 @@
 <!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Trouble Check List</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#b71c1c"><link rel="icon" href="icon.svg"><link rel="stylesheet" href="style.css"></head><body>
 <header><h1>Trouble Check List</h1><small>כל הזכויות שמורות לסטניסלב איבנוב</small></header>
+<div id="upd" class="hide" style="background:#1565c0;color:#fff;padding:8px 10px;font-size:14px;text-align:center;cursor:pointer;position:sticky;top:0;z-index:9"><span></span></div>
 <main>
 <div class="card site"><input id="siteName" placeholder="שם אתר" aria-label="שם אתר"><input id="siteAddr" placeholder="כתובת אתר" aria-label="כתובת אתר"></div>
+<div class="jobbar"><span id="jobStat"></span><button id="saveJobBtn">💾 שמור</button><button id="newJobBtn">קריאה חדשה</button><button id="doneBtn" class="ok">סיום טיפול</button></div>
+<div id="roBar" class="robar">קריאה סגורה (טופלה) – לצפייה בלבד <button id="reopenBtn">פתח מחדש</button></div>
 <button class="primary" id="newBtn">+ פתיחת תקלה חדשה</button>
 <form class="card hide" id="form" style="margin-top:12px">
 <label>סוג התקן</label><div class="chips" id="devChips"></div>
 <div id="addrBox"><label>כתובת (לופ + מספר)</label><div class="row2"><select id="loop"></select><input id="addr" inputmode="numeric" maxlength="3" placeholder="1-127"></div></div>
 <div id="zoneBox" class="hide"><label>אזור</label><select id="zone"></select></div>
 <div class="err" id="addrErr"></div>
+<label for="loc">מיקום ההתקן</label><input id="loc" placeholder="למשל: קומה 2, חדר שרתים">
 <label for="model">סוג אביזר (דגם טלפייר / אחר)</label><input id="model" list="models" placeholder="חפש דגם או כתוב חופשי"><datalist id="models"></datalist>
 <label>סוג התקלה</label><div class="chips" id="faultChips"></div>
 <label for="note">תיאור חופשי</label><textarea id="note" placeholder="תיאור תקלה חופשי..."></textarea>
@@ -17,5 +21,5 @@
 <div class="row2"><button type="submit" class="ok" id="saveBtn">שמירה</button><button type="button" id="cancelBtn">ביטול</button></div>
 </form>
 <div class="toolbar" style="margin-top:12px"><button id="shareBtn">שיתוף / ייצוא</button><button id="clearBtn">מחיקת הכל</button></div>
-<h2 id="hOpen"></h2><div id="list"></div><h2 id="hDone"></h2><div id="done"></div>
-<footer style="text-align:center;font-size:11px;color:#888;padding:8px">Trouble Check List v0.1</footer></main><script src="models.js"></script><script src="app.js"></script></body></html>
+<h2 id="hOpen"></h2><div id="list"></div><h2 id="hDone"></h2><div id="done"></div><h2 id="hHist"></h2><input id="hSearch" placeholder="🔍 חיפוש בהיסטוריה (אתר, כתובת, מיקום, דגם...)" style="margin-bottom:4px"><div class="chips" id="hFilter"><button class="chip" data-f="all">הכל</button><button class="chip" data-f="open">בטיפול</button><button class="chip" data-f="done">טופלה</button></div><div id="hist"></div>
+<footer style="text-align:center;font-size:11px;color:#888;padding:8px">Trouble Check List v<span id="ver">0.1</span></footer></main><div id="toast"></div><script src="models.js"></script><script src="app.js"></script></body></html>
