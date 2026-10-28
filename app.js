@@ -73,17 +73,17 @@ function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');setTi
 // autosave: draft persists in localStorage on every change; existing open jobs also sync to history
 const _save=save;save=()=>{_save();const h=hist.find(x=>x.id===job.id);if(h&&!job.ro&&h.status==='open'){h.rows=JSON.parse(JSON.stringify(rows));h.ts=Date.now();saveHist();renderHist()}};
 ['siteName','siteAddr'].forEach(i=>$(i).addEventListener('input',()=>{const h=hist.find(x=>x.id===job.id);if(h&&!job.ro){h.name=$('siteName').value;h.addr=$('siteAddr').value;saveHist()}}));
-$('hSearch').oninput=()=>renderHist();document.querySelectorAll('#hFilter .chip').forEach(b=>b.onclick=()=>{hf=b.dataset.f;renderHist()});
-function renderHist(){const el=$('hist');el.innerHTML='';const q=($('hSearch').value||'').trim().toLowerCase();const L=[...hist].filter(h=>(hf==='all'||h.status===hf)&&(!q||[h.name,h.addr,...h.rows.map(line)].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.ts-a.ts);
+document.querySelectorAll('#hFilter .chip').forEach(b=>b.onclick=()=>{hf=b.dataset.f;renderHist()});
+function renderHist(){const el=$('hist');el.innerHTML='';const L=[...hist].filter(h=>hf==='all'||h.status===hf).sort((a,b)=>b.ts-a.ts);
  document.querySelectorAll('#hFilter .chip').forEach(b=>b.classList.toggle('on',b.dataset.f===hf));
  $('hHist').textContent=`היסטוריית קריאות (${hist.length}) · בטיפול ${hist.filter(h=>h.status==='open').length} · טופלו ${hist.filter(h=>h.status==='done').length}`;let last='';
  if(!L.length)el.innerHTML='<div class="card" style="text-align:center;color:#777">אין קריאות</div>';
- L.forEach(h=>{const day=dmy(h.ts);if(day!==last){last=day;const g=document.createElement('div');g.className='hday';g.textContent=day;el.appendChild(g)}
+ L.forEach(h=>{const day=dmy(h.ts);
   const d=document.createElement('div');d.className='card item hist '+h.status+(h.id===job.id?' cur':'');const o=h.rows.filter(r=>!r.fixed).length;
-  d.innerHTML='<div class="body"><div class="hn"><span class="badge"></span> <span class="nm"></span></div><div class="ha"></div><div class="ts"></div></div><div class="acts"><button class="hl"></button><button class="hs">שיתוף</button><button class="hd">מחיקה</button></div>';
+  d.innerHTML='<div class="body"><div class="hd8"></div><div class="hn"><span class="nm"></span> <span class="badge"></span></div><div class="ha"></div><div class="ts"></div></div><div class="acts"><button class="hl"></button><button class="hs">שיתוף</button><button class="hd">מחיקה</button></div>';
   const bd=d.querySelector('.badge');bd.className='badge '+h.status;bd.textContent=h.status==='done'?'טופלה':'בטיפול';
   d.querySelector('.nm').textContent=h.name||'(ללא שם אתר)';d.querySelector('.ha').textContent=h.addr||'(ללא כתובת)';
-  d.querySelector('.ts').textContent=`${dmy(h.ts)} ${hm(h.ts)} · ${h.rows.length} תקלות · ${o} פתוחות`;
+  d.querySelector('.hd8').textContent=`${dmy(h.ts)} ${hm(h.ts)}`;d.querySelector('.ts').textContent=`${h.rows.length} תקלות · ${o} פתוחות`;
   d.querySelector('.hl').textContent=h.status==='done'?'צפייה':'המשך';
   d.querySelector('.hl').onclick=()=>{if(h.id===job.id){scrollTo(0,0);return}if(!job.ro&&!empty())upsert(hist.find(x=>x.id===job.id)?.status==='done'?'done':'open');loadJob(h,h.status==='done')};
   d.querySelector('.hs').onclick=()=>shareText(exportText(h.name,h.addr,h.rows,h.ts));
