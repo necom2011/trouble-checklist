@@ -33,3 +33,4 @@ textarea,input,select,button{font-family:inherit}
 .hist .hn{font-size:17px}.hd8{font-size:12px;color:#555;font-weight:600}#hFilter .chip{min-height:26px;padding:2px 10px;font-size:12px}
 header{position:relative}.langs{position:absolute;top:6px;inset-inline-end:6px;display:flex;gap:2px}.langs button{min-height:22px;padding:1px 5px;font-size:11px;background:#fff3;color:#fff;border-radius:5px}.langs button.on{background:#fff;color:#b71c1c;font-weight:700}
 html[dir=ltr] .item{border-right:0;border-left:6px solid #b71c1c}html[dir=ltr] .item.fixed,html[dir=ltr] .hist.done{border-left-color:#2e7d32}html[dir=ltr] .hist.open{border-left-color:#ef6c00}
+.vtag{font-size:12px;font-weight:600;background:#fff;color:#b71c1c;border-radius:8px;padding:1px 6px;vertical-align:middle}.chk{min-height:20px;padding:1px 6px;font-size:11px;background:#fff3;color:#fff;border-radius:5px;margin-inline-start:4px}

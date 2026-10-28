@@ -118,7 +118,15 @@ applyLang();
 if('serviceWorker'in navigator){let reloading=false,wantUpd=false;
  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(wantUpd&&!reloading){reloading=true;location.reload()}});
  const show=async w=>{let v={};try{v=await (await fetch('version.json?t='+Date.now(),{cache:'no-store'})).json()}catch(e){}
-  const bn=$('upd');bn.querySelector('span').textContent=`${t('newVer')}${v.version?' (v'+v.version+')':''} – ${t('upd')}`+(v.changelog?' · '+v.changelog:'');bn.classList.remove('hide');bn.onclick=()=>{wantUpd=true;w.postMessage('SKIP_WAITING')}};
+  const bn=$('upd');bn.querySelector('span').textContent=`${t('newVer')}${v.version?' (v'+v.version+')':''} – ${t('upd')}`+((v.changelogs&&v.changelogs[LANG])||v.changelog?' · '+((v.changelogs&&v.changelogs[LANG])||v.changelog):'');bn.classList.remove('hide');bn.onclick=()=>{wantUpd=true;w.postMessage('SKIP_WAITING')}};
  navigator.serviceWorker.register('sw.js').then(reg=>{const chk=()=>{if(reg.waiting&&navigator.serviceWorker.controller)show(reg.waiting)};chk();
   reg.addEventListener('updatefound',()=>{const n=reg.installing;n&&n.addEventListener('statechange',()=>{if(n.state==='installed')chk()})});
-  const up=()=>reg.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(!document.hidden)up()});setInterval(up,30*60000);window.__checkUpdate=up})}
+  const up=()=>reg.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(!document.hidden)up()});setInterval(up,30*60000);window.__checkUpdate=up;
+  $('chkBtn').onclick=async()=>{const cur=$('ver').textContent.trim();if(!navigator.onLine){toast(t('noConn'));return}toast(t('checking'));
+   let v;try{v=await (await fetch('version.json?t='+Date.now(),{cache:'no-store'})).json()}catch(e){toast(t('noConn'));return}
+   try{await reg.update()}catch(e){}
+   if(reg.waiting&&navigator.serviceWorker.controller){show(reg.waiting);return}
+   if(v.version&&v.version!==cur){const w=await new Promise(res=>{const n=reg.installing;if(!n)return res(reg.waiting);n.addEventListener('statechange',()=>{if(n.state==='installed'||n.state==='redundant')res(reg.waiting)});setTimeout(()=>res(reg.waiting),15000)});
+    if(w){show(w);return}}
+   toast(t('upToDate')+' (v'+cur+')')}})}
+else $('chkBtn').onclick=()=>toast(t('upToDate')+' (v'+$('ver').textContent+')');
