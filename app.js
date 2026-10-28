@@ -73,8 +73,8 @@ function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');setTi
 // autosave: draft persists in localStorage on every change; existing open jobs also sync to history
 const _save=save;save=()=>{_save();const h=hist.find(x=>x.id===job.id);if(h&&!job.ro&&h.status==='open'){h.rows=JSON.parse(JSON.stringify(rows));h.ts=Date.now();saveHist();renderHist()}};
 ['siteName','siteAddr'].forEach(i=>$(i).addEventListener('input',()=>{const h=hist.find(x=>x.id===job.id);if(h&&!job.ro){h.name=$('siteName').value;h.addr=$('siteAddr').value;saveHist()}}));
-document.querySelectorAll('#hFilter .chip').forEach(b=>b.onclick=()=>{hf=b.dataset.f;renderHist()});
-function renderHist(){const el=$('hist');el.innerHTML='';const L=[...hist].filter(h=>hf==='all'||h.status===hf).sort((a,b)=>b.ts-a.ts);
+$('hSearch').oninput=()=>renderHist();document.querySelectorAll('#hFilter .chip').forEach(b=>b.onclick=()=>{hf=b.dataset.f;renderHist()});
+function renderHist(){const el=$('hist');el.innerHTML='';const q=($('hSearch').value||'').trim().toLowerCase(),qd=q.replace(/[.\-]/g,'/');const L=[...hist].filter(h=>(hf==='all'||h.status===hf)&&(!q||(h.name||'').toLowerCase().includes(q)||(h.addr||'').toLowerCase().includes(q)||dmy(h.ts).includes(qd)||dmy(h.ts).replace(/\/0/g,'/').replace(/^0/,'').includes(qd))).sort((a,b)=>b.ts-a.ts);
  document.querySelectorAll('#hFilter .chip').forEach(b=>b.classList.toggle('on',b.dataset.f===hf));
  $('hHist').textContent=`היסטוריית קריאות (${hist.length}) · בטיפול ${hist.filter(h=>h.status==='open').length} · טופלו ${hist.filter(h=>h.status==='done').length}`;let last='';
  if(!L.length)el.innerHTML='<div class="card" style="text-align:center;color:#777">אין קריאות</div>';
